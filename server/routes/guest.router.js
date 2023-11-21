@@ -24,8 +24,6 @@ router.post('/', (req, res) => {
     const guest = req.body;
     const sqlText = `INSERT INTO guests ("name", "kidsMeal")
                      VALUES ($1, $2)`;
-    // Let sql sanitize your inputs (NO Bobby Drop Tables here!)
-    // the $1, $2, etc get substituted with the values from the array below
     pool.query(sqlText, [guest.name, guest.kidsMeal])
         .then((result) => {
             console.log(`Added guest to the database`, guest);
@@ -34,6 +32,22 @@ router.post('/', (req, res) => {
         .catch((error) => {
             console.log(`Error making database query ${sqlText}`, error);
             res.sendStatus(500); // Good server always responds
+        })
+})
+
+router.delete('/:id', (req,res) =>{
+    const sqlText = `
+    DELETE FROM guests
+    WHERE "id" = $1`
+    const sqlValues = [req.params.id]
+    pool.query(sqlText, sqlValues)
+        .then((result) => {
+            console.log("Deleted guest from database with ID:", req.params.id)
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.log(`Error making database query ${sqlText}`, error);
+            res.sendStatus(500);
         })
 })
 

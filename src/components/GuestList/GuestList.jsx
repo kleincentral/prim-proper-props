@@ -1,4 +1,7 @@
-function GuestList({guestList}) {
+import GuestListItem from '../GuestListItem/GuestListItem'
+
+function GuestList({guestList, getGuests}) {
+
     return(
         <>
         <h2>Guest List</h2>
@@ -10,12 +13,13 @@ function GuestList({guestList}) {
             </tr>
             </thead>
             <tbody>
-            {guestList.map(guest => (
-                <tr key={guest.id}>
-                <td>{guest.name}</td>
-                <td>{String(guest.kidsMeal)}</td>
-                </tr>
-            ))}
+            {
+                guestList.map((guest) => {
+                    return(
+                        <GuestListItem key={guest.id} guest={guest} getGuests={getGuests}/>
+                    )
+                })
+            }
             </tbody>
         </table>
         </>
