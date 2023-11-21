@@ -34,7 +34,7 @@ function App() {
       <PartyLeader leader={guestList[0]}/>
       <GuestForm getGuests={getGuests}/>
       <GuestList guestList={guestList}/>
-      <DinnerSupplies guestList={guestList}/>
+      <DinnerSupplies count={guestList.length}/>
       <Footer />
     </div>
   );
